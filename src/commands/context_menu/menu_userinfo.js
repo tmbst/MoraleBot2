@@ -2,8 +2,6 @@ const { ContextMenuCommandBuilder, ApplicationCommandType, EmbedBuilder } = requ
 const moment = require('moment');
 
 module.exports = {
-	cooldown: 2,
-
 	data: new ContextMenuCommandBuilder()
     .setName("userinfo")
     .setType(ApplicationCommandType.User),
