@@ -5,11 +5,13 @@ const moment = require('moment');
 module.exports = {
 	data: new SlashCommandBuilder()
     .setName("userinfo")
-	.setDescription("Provides information about the user."),
+	.setDescription("Provides information about the user.")
+	.addUserOption(option => option.setName('target').setDescription('The User to be searched')),
+
 
 	async execute(interaction) {
 		let guildMember;
-		let user = interaction.options.getUser("user");
+		let user = interaction.options.getUser('target');
 
 		// Extract optional mentionable if it exists, otherwise get the user who called the interaction
 		if (user != null) {
@@ -67,7 +69,7 @@ module.exports = {
 					inline: true,
 				})
             .addFields({name: `🎭 All Roles (${guildMemberRolesSize})`, value: guildMemberRolesText ? guildMemberRolesText: "No roles assigned"})
-        
+
 		await interaction.reply({ embeds: [userInfoEmbed] });
 	},
 };
