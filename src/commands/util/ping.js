@@ -25,7 +25,7 @@ module.exports = {
 				{name: 'API Latency', value: `**${apiLatency}ms**`},
 			)
 
-		return await interaction.editReply({
+		await interaction.editReply({
 			content : 'Ping Calculated.', 
 			embeds: [pingEmbed] 
 		});
