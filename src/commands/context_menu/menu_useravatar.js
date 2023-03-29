@@ -1,8 +1,6 @@
 const { ContextMenuCommandBuilder, ApplicationCommandType } = require('discord.js');
 
 module.exports = {
-	cooldown: 2,
-
     data: new ContextMenuCommandBuilder()
         .setName('useravatar')
         .setType(ApplicationCommandType.User),
