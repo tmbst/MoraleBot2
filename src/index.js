@@ -2,6 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { Client, Collection, Events, GatewayIntentBits } = require("discord.js");
 const dotenv = require("dotenv");
+const mongodb = require("./database/mongo");
 
 dotenv.config();
 
@@ -50,3 +51,6 @@ for (const file of eventFiles) {
 
 // Log in to Discord with your client's token
 client.login(process.env.DISCORD_TOKEN);
+
+// Connect to MongoDB
+mongodb.connectToMongo(process.env.MONGO_URI);
