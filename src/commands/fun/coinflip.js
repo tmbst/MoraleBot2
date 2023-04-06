@@ -5,7 +5,6 @@ const {
   ButtonStyle,
   ComponentType,
 } = require("discord.js");
-const RNG = require("rng");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -58,15 +57,8 @@ module.exports = {
     });
 
     // simulates flipping a coin through rng
-    var rng = new RNG(Math.random);
-    let flip = rng.random(0, 1);
-
-    let results = "";
-    if (flip == 0) {
-      results = "heads";
-    } else {
-      results = "tails";
-    }
+    // will implement rng in the future, for now results will always be heads
+    let results = "heads";
 
     // Collection event: Handles game logic
     collector.on("collect", async (collected) => {
