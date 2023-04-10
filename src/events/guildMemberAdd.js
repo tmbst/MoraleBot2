@@ -1,5 +1,5 @@
 const { Events, EmbedBuilder } = require("discord.js");
-const { DateTime } = require("luxon");
+const moment = require("moment");
 
 /*
 	Event: guildMemberAdd
@@ -8,54 +8,32 @@ const { DateTime } = require("luxon");
 */
 
 module.exports = {
-  name: "guildMemberAdd",
+  name: Events.GuildMemberAdd,
 
   execute(member) {
     // getting user join date
-    const userJoinedDate = DateTime.fromJSDate(member.user.createdAt);
-    const userAccountAge = DateTime.now()
-      .diff(userJoinedDate, ["years", "months", "days"])
-      .toObject();
-
-    let msg = "";
-
-    // creates msg for userAccountAge
-    if (userAccountAge.years == 0 && userAccountAge.months == 0) {
-      msg = "Fresh Account: ";
-    } else if (userAccountAge.years > 0) {
-      msg = msg + userAccountAge.years + " years";
-    }
-    if (userAccountAge.months > 0) {
-      if (msg != "") {
-        msg = msg + " ,";
-      }
-      msg = msg + userAccountAge.months + "months";
-    }
-    if (userAccountAge.days > 0) {
-      if (msg != "" && msg != "Fresh Account: ") {
-        msg = msg + " ,";
-      }
-      msg = msg + Math.floor(userAccountAge.days) + " days";
-    }
+    const userJoinedDate = moment(member.user.createdAt).format(
+      "MMMM DD, YYYY"
+    );
 
     // getting channel info
     const channel = member.guild.channels.cache.get(
       process.env.GENERAL_CHANNEL_ID
     );
-    // getting user info
-    const userName = member.user.username;
-    const userDiscrim = member.user.discriminator;
-    const userAvatar = member.user.displayAvatarURL();
 
     // creating welcome embed
     const welcomeEmbed = new EmbedBuilder()
       .setColor("00FF00")
       .setTitle("Member Joined")
-      .setAuthor({ name: userName + "#" + userDiscrim, iconURL: userAvatar })
+      .setThumbnail(member.user.displayAvatarURL())
+      .setAuthor({
+        name: member.user.username + "#" + member.user.discriminator,
+        iconURL: member.user.displayAvatarURL(),
+      })
       .setDescription("Welcome to Team Morale Boost!")
       .addFields({
-        name: "Account Age",
-        value: msg,
+        name: "User Registered",
+        value: userJoinedDate,
       })
       .setTimestamp();
 
