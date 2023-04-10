@@ -7,11 +7,14 @@ const { Events } = require("discord.js");
 */
 
 module.exports = {
-  name: Events.GuildCreate,
+    name: Events.GuildCreate,
 
-  async execute(guild) {
-    const channel = guild.channels.cache.get(process.env.GENERAL_CHANNEL_ID);
-    let message = "Thanks for inviting me to the server! I am the MoraleBot2.";
-    channel.send(message);
-  },
+    async execute(guild) {
+        const channel = guild.channels.cache.get(
+            process.env.WELCOME_CHANNEL_ID
+        );
+        let message =
+            "Thanks for inviting me to the server! I am the MoraleBot2.";
+        channel.send(message);
+    },
 };
