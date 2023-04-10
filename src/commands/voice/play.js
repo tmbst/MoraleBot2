@@ -47,7 +47,6 @@ module.exports = {
 
     // Determine the file path for the given request
     let filePath;
-    console.log(playRequest);
     switch (playRequest) {
       case "david":
         const files = fs.readdirSync("./assets/sounds/david/");
