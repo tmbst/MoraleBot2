@@ -29,7 +29,8 @@ module.exports = {
           { name: "Goddammit", value: "goddammit" },
           { name: "Bonk", value: "bonk" },
           { name: "Bingbong", value: "bingbong" },
-          { name: "Animal", value: "animal" }
+          { name: "Animal", value: "animal" },
+          { name: "Pepperoncini", value: "pepperoncini" }
         )
     ),
 
@@ -96,7 +97,7 @@ module.exports = {
     }
 
     // Get the bot voice connection and destroy it
-    let connection = getVoiceConnection(interaction.guild.id);
+    let connection = getVoiceConnection(channel.guild.id);
 
     if (!connection) {
       // DiscordJS Voice Connections and Audio Player Setup
@@ -116,8 +117,14 @@ module.exports = {
     });
     resource.volume.setVolume(0.5);
 
-    connection.subscribe(player);
+    // Subscribe the connection to the audio player (will play audio on the voice connection)
+    const subscription = connection.subscribe(player);
 
+    // subscription could be undefined if the connection is destroyed
+    if (subscription) {
+      // Unsubscribe after 5 seconds (stop playing audio on the voice connection)
+      setTimeout(() => subscription.unsubscribe(), 5_000);
+    }
     player.play(resource);
 
     return await interaction.reply(`Now playing ${playRequest} audio.`);

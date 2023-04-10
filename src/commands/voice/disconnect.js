@@ -23,7 +23,7 @@ module.exports = {
     }
 
     // Get the bot voice connection and destroy it
-    const connection = getVoiceConnection(interaction.guild.id);
+    const connection = getVoiceConnection(userVoiceChannel.guild.id);
 
     if (!connection) {
       return await interaction.reply(
